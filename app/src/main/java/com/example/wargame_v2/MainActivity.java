@@ -1,6 +1,7 @@
 package com.example.wargame_v2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.os.Bundle;
 import android.view.View;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private void decreasePB(ProgressBar pb, int points) {
         pb.setProgress(pb.getProgress() - points);
         if(pb.getProgress() < 40) {
-            pb.setProgressDrawable(getDrawable(R.drawable.red_progress_bar));
+            pb.setProgressDrawable(ContextCompat.getDrawable(this, R.drawable.red_progress_bar));
         }
     }
 

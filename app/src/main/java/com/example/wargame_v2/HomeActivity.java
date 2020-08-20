@@ -23,19 +23,19 @@ public class HomeActivity extends AppCompatActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity("MainActivity");
+                openActivity(MainActivity.class);
             }
         });
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity("RankActivity");
+                openActivity(RankActivity.class);
             }
         });
     }
 
-    private void openActivity(String activity) {
-        Intent intent = new Intent();
+    private void openActivity(Class activity) {
+        Intent intent = new Intent(HomeActivity.this, activity);
         startActivity(intent);
     }
 

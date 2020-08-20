@@ -15,8 +15,8 @@
         android:textStyle="bold"
         android:text="SUPERMAN WON!"
         android:textColor="#F44336"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:layout_marginTop="70dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/victory_BTN_newGame"
@@ -28,8 +28,22 @@
         android:text="New Game"
         android:textColor="#DEE3E2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/victory_TV_title"
+        android:background="@drawable/rounded_button"/>
+
+    <Button
+        android:id="@+id/victory_BTN_home"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="Home"
+        android:textColor="#DEE3E2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/victory_BTN_newGame"
         android:background="@drawable/rounded_button"/>
 
 </RelativeLayout>

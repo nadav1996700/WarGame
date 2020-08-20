@@ -3,18 +3,19 @@ package com.example.wargame_v2;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 //glide
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,15 +30,19 @@ public class MainActivity extends AppCompatActivity {
     private ProgressBar ironman_PB;
     private ImageView superman_image;
     private ImageView ironman_image;
+    private ImageView superman_cube;
+    private ImageView ironman_cube;
     private Button largeAttack_superman;
     private Button mediumAttack_superman;
     private Button smallAttack_superman;
     private Button largeAttack_ironman;
     private Button mediumAttack_ironman;
     private Button smallAttack_ironman;
+    private Button pick;
     private ArrayList<Button> superman_Buttons;
     private ArrayList<Button> ironman_Buttons;
-    private int turn = SUPERMAN_TURN;
+    private Random rand = new Random();
+    private int turn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,56 +56,120 @@ public class MainActivity extends AppCompatActivity {
         initialize_superman_list();
         initialize_ironman_list();
 
-        /* activate buttons */
-        activateButtons(superman_Buttons);
-        activateButtons(ironman_Buttons);
-
-        /* disable ironman buttons -> superman start */
-        for(Button btn: ironman_Buttons)
-            btn.setEnabled(false);
+        pick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                choose_who_start();
+                /* disable buttons of the player that lost in the dice */
+                disable_buttons();
+                /* start the game */
+                //playGame();
+            }
+        });
     }
 
-    private void activateButtons(ArrayList<Button> buttons) {
-
-        for(Button btn: buttons) {
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    /* update progress bar after attack */
-                    setProgressBar(view);
-
-
-                    /* if game over -> switch Activity
-                       else -> switch turn */
-                    if(!gameOver())
-                        switchTurn();
-                }
-            });
+    private void disable_buttons() {
+        if(turn == SUPERMAN_TURN) {
+            for (Button btn : ironman_Buttons)
+                btn.setEnabled(false);
+        } else {
+            for (Button btn : superman_Buttons)
+                btn.setEnabled(false);
         }
     }
 
-    private void setProgressBar(View view) {
+    private void choose_who_start() {
+        /* drop the cubes and choose random numbers */
+        int superman_number = diceCube(superman_cube);
+        int ironman_number = diceCube(ironman_cube);
+        if(superman_number > ironman_number) {
+            turn = SUPERMAN_TURN;
+            pick.setEnabled(false);
+        }
+        else if (ironman_number > superman_number) {
+            turn  = IRONMAN_TURN;
+            pick.setEnabled(false);
+        }
+    }
+
+    /* make random number for each player and update the photo of the cubes */
+    private int diceCube(ImageView cube_image) {
+        int random = rand.nextInt(6) + 1;
+        /* change photo of Image View */
+        change_IV(cube_image, random);
+        return random;
+    }
+
+    private void change_IV(ImageView cube_image, int number) {
+        switch(number) {
+            case 1:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_1));
+                break;
+            case 2:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_2));
+                break;
+            case 3:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_3));
+                break;
+            case 4:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_4));
+                break;
+            case 5:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_5));
+                break;
+            case 6:
+                cube_image.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.dice_6));
+                break;
+        }
+    }
+
+    private void playGame() {
+        new Thread (new Runnable() {
+            @Override
+            public void run() {
+                do {
+                    int number_of_attack = rand.nextInt(3) + 1;
+                    setProgressBar(number_of_attack);
+                    switchTurn();
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } while(!gameOver());
+            }
+        }).start();
+
+    }
+
+    private void setProgressBar(int number_of_attack) {
         if (turn == SUPERMAN_TURN) {
-            switch (view.getId()) {
-                case R.id.main_BTN_10pt_superman:
+            switch (number_of_attack) {
+                case 1:
+                    smallAttack_superman.setEnabled(false);
                     decreasePB(ironman_PB, SMALL_ATTACK_POINTS);
                     break;
-                case R.id.main_BTN_30pt_superman:
+                case 2:
+                    mediumAttack_superman.setEnabled(false);
                     decreasePB(ironman_PB, MEDIUM_ATTACK_POINTS);
                     break;
-                case R.id.main_BTN_50pt_superman:
+                case 3:
+                    largeAttack_superman.setEnabled(false);
                     decreasePB(ironman_PB, LARGE_ATTACK_POINTS);
                     break;
             }
         } else if (turn == IRONMAN_TURN) {
-            switch (view.getId()) {
-                case R.id.main_BTN_10pt_ironman:
+            switch (number_of_attack) {
+                case 1:
+                    smallAttack_ironman.setEnabled(false);
                     decreasePB(superman_PB, SMALL_ATTACK_POINTS);
                     break;
-                case R.id.main_BTN_30pt_ironman:
+                case 2:
+                    mediumAttack_ironman.setEnabled(false);
                     decreasePB(superman_PB, MEDIUM_ATTACK_POINTS);
                     break;
-                case R.id.main_BTN_50pt_ironman:
+                case 3:
+                    largeAttack_ironman.setEnabled(false);
                     decreasePB(superman_PB, LARGE_ATTACK_POINTS);
                     break;
             }
@@ -117,19 +186,20 @@ public class MainActivity extends AppCompatActivity {
     /* if game over -> send victory name to Victory Activity and switch activity */
     private boolean gameOver() {
         if(superman_PB.getProgress() == 0 || ironman_PB.getProgress() == 0) {
-            disableButtons();
-            Toast.makeText(MainActivity.this, "game done",
-                    Toast.LENGTH_LONG).show();
+            openVictoryActivity();
+            finish();
             return true;
         }
         return false;
     }
 
-    private void disableButtons() {
-        for(Button btn: superman_Buttons)
-            btn.setEnabled(false);
-        for(Button btn: ironman_Buttons)
-            btn.setEnabled(false);
+    private void openVictoryActivity() {
+        Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
+        if(turn == SUPERMAN_TURN)
+            intent.putExtra(EXTRA_VICTORY, "Ironman");
+        else
+            intent.putExtra(EXTRA_VICTORY, "Superman");
+        startActivity(intent);
     }
 
     private void initialize_superman_list() {
@@ -155,8 +225,11 @@ public class MainActivity extends AppCompatActivity {
         largeAttack_ironman = findViewById(R.id.main_BTN_50pt_ironman);
         mediumAttack_ironman = findViewById(R.id.main_BTN_30pt_ironman);
         smallAttack_ironman = findViewById(R.id.main_BTN_10pt_ironman);
+        pick = findViewById(R.id.main_BTN_pick);
         superman_image = findViewById(R.id.main_IV_superman);
         ironman_image = findViewById(R.id.main_IV_ironman);
+        superman_cube = findViewById(R.id.main_IV_supermanCube);
+        ironman_cube = findViewById(R.id.main_IV_ironmanCube);
 
         /* set images using glide library*/
         setImages();
@@ -167,6 +240,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setImages() {
+        /* set images of players */
         Glide.with(MainActivity.this)
                 .load("")
                 .placeholder(R.drawable.superman)
@@ -178,6 +252,19 @@ public class MainActivity extends AppCompatActivity {
                 .placeholder(R.drawable.iron)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(ironman_image);
+
+        /* set images of cubes */
+        Glide.with(MainActivity.this)
+                .load("")
+                .placeholder(R.drawable.dice_1)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(superman_cube);
+
+        Glide.with(MainActivity.this)
+                .load("")
+                .placeholder(R.drawable.dice_2)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .into(ironman_cube);
     }
 
     private void switchTurn() {

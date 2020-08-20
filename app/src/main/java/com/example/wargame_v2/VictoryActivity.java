@@ -11,8 +11,9 @@ import android.widget.TextView;
 
 public class VictoryActivity extends AppCompatActivity {
 
-    private TextView victory;
+    private TextView victory_TV;
     private Button newGame;
+    private Button home_screen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,10 +25,18 @@ public class VictoryActivity extends AppCompatActivity {
 
         // get victory name and set TextView
         Intent input = getIntent();
-        String victor = input.getStringExtra(MainActivity.EXTRA_VICTORY);
-        victory.setText(victor + " WON!");
+        String victory = input.getStringExtra(MainActivity.EXTRA_VICTORY);
+        victory_TV.setText(victory + " WON!");
 
         newGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivity(MainActivity.class);
+                finish();
+            }
+        });
+
+        home_screen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -37,6 +46,12 @@ public class VictoryActivity extends AppCompatActivity {
 
     private void setValues() {
         newGame = findViewById(R.id.victory_BTN_newGame);
-        victory = findViewById(R.id.victory_TV_title);
+        home_screen = findViewById(R.id.victory_BTN_home);
+        victory_TV = findViewById(R.id.victory_TV_title);
+    }
+
+    private void openActivity(Class activity) {
+        Intent intent = new Intent(VictoryActivity.this, activity);
+        startActivity(intent);
     }
 }

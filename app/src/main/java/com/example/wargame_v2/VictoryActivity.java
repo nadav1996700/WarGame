@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class VictoryActivity extends AppCompatActivity {
 
+    public static final String EXTRA_KEY_VICTORY = "EXTRA_VICTORY";
     private TextView victory_TV;
     private Button newGame;
     private Button home_screen;
@@ -25,7 +26,7 @@ public class VictoryActivity extends AppCompatActivity {
 
         // get victory name and set TextView
         Intent input = getIntent();
-        String victory = input.getStringExtra(MainActivity.EXTRA_VICTORY);
+        String victory = input.getStringExtra(EXTRA_KEY_VICTORY);
         victory_TV.setText(victory + " WON!");
 
         newGame.setOnClickListener(new View.OnClickListener() {

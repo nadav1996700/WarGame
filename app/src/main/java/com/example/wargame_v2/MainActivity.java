@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
     private static final int LARGE_ATTACK_POINTS = 50;
     private static final int MEDIUM_ATTACK_POINTS = 30;
     private static final int SMALL_ATTACK_POINTS = 10;
+    private final String PLAYER1_NAME = "Superman";
+    private final String PLAYER2_NAME = "Ironman";
+    private final int DELAY = 2000;
 
     private ProgressBar player1_PB;
     private ProgressBar player2_PB;
@@ -43,12 +46,23 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> player1_Buttons;
     private ArrayList<Button> player2_Buttons;
     private Random rand = new Random();
-    private final String PLAYER1_NAME = "Superman";
-    private final String PLAYER2_NAME = "Ironman";
-    private Handler handler;
-    private Runnable runnable;
-    private final int DELAY = 2000;
     private int turn = 0;
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            /* choose random attack */
+            int number_of_attack = rand.nextInt(3) + 1;
+            /* update life bar */
+            setProgressBar(number_of_attack);
+            /* switch turn -> Turns off the current player's buttons and activates the opponent's */
+            switchTurn();
+
+            if (!gameOver())
+                handler.postDelayed(this, DELAY);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,27 +80,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // start game only if players didn't get the same value in dice
-                if (choose_who_start() == true) {
+                if (choose_who_start()) {
                     /* enable buttons of the player that won in dice */
                     Enable_buttons();
+                    /* start game */
+                    handler.postDelayed(runnable, DELAY);
                 }
             }
         });
-
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                /* choose random attack */
-                int number_of_attack = rand.nextInt(3) + 1;
-                /* update life bar */
-                setProgressBar(number_of_attack);
-                /* switch turn -> Turns off the current player's buttons and activates the opponent's */
-                switchTurn();
-
-                if (!gameOver())
-                    handler.postDelayed(this, DELAY);
-            }
-        };
     }
 
     /* enable buttons of the player that won in dice */
@@ -153,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        handler.postDelayed(runnable, DELAY);
+        if(!pick.isEnabled())
+            /* start game */
+            handler.postDelayed(runnable, DELAY);
     }
 
     @Override

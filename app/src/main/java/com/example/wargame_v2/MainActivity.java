@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> player1_Buttons;
     private ArrayList<Button> player2_Buttons;
     private Random rand = new Random();
+    private MediaPlayer mp;
     private int turn = 0;
 
     Handler handler = new Handler();
@@ -54,8 +56,10 @@ public class MainActivity extends AppCompatActivity {
         public void run() {
             /* choose random attack */
             int number_of_attack = rand.nextInt(3) + 1;
+            /* set sound according to attack*/
+            makeSound(number_of_attack);
             /* update life bar */
-            setProgressBar(number_of_attack);
+            update_PB(number_of_attack);
             /* switch turn -> Turns off the current player's buttons and activates the opponent's */
             switchTurn();
 
@@ -68,10 +72,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         /* initialize values */
         setValues();
-
         /* add buttons to lists */
         initialize_player1_list();
         initialize_player2_list();
@@ -151,11 +153,30 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /* make appropriate sound by attack points */
+    private void makeSound(int number_of_attack) {
+        switch(number_of_attack) {
+            case 1:
+                mp = MediaPlayer.create(this, R.raw.small_points_sound);
+                break;
+            case 2:
+                mp = MediaPlayer.create(this, R.raw.medium_points_sound);
+                break;
+            case 3:
+                mp = MediaPlayer.create(this, R.raw.large_points_sound);
+                break;
+            default:
+                break;
+        }
+        mp.start();
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
+        /* start game only when turn has been set*/
         if(!pick.isEnabled())
-            /* start game */
             handler.postDelayed(runnable, DELAY);
     }
 
@@ -165,40 +186,34 @@ public class MainActivity extends AppCompatActivity {
         handler.removeCallbacks(runnable);
     }
 
-    private void setProgressBar(int number_of_attack) {
-        if (turn == PLAYER1_TURN) {
-            switch (number_of_attack) {
-                case 1:
-                    smallAttack_player1.setEnabled(false);
-                    decreasePB(player2_PB, SMALL_ATTACK_POINTS);
-                    break;
-                case 2:
-                    mediumAttack_player1.setEnabled(false);
-                    decreasePB(player2_PB, MEDIUM_ATTACK_POINTS);
-                    break;
-                case 3:
-                    largeAttack_player1.setEnabled(false);
-                    decreasePB(player2_PB, LARGE_ATTACK_POINTS);
-                    break;
-            }
-        } else if (turn == PLAYER2_TURN) {
-            switch (number_of_attack) {
-                case 1:
-                    smallAttack_player2.setEnabled(false);
-                    decreasePB(player1_PB, SMALL_ATTACK_POINTS);
-                    break;
-                case 2:
-                    mediumAttack_player2.setEnabled(false);
-                    decreasePB(player1_PB, MEDIUM_ATTACK_POINTS);
-                    break;
-                case 3:
-                    largeAttack_player2.setEnabled(false);
-                    decreasePB(player1_PB, LARGE_ATTACK_POINTS);
-                    break;
-            }
-        }
+    /* update life bar */
+    private void update_PB(int number_of_attack) {
+        if (turn == PLAYER1_TURN)
+            setProgressBar(number_of_attack, player1_Buttons, player2_PB);
+
+        else if (turn == PLAYER2_TURN)
+            setProgressBar(number_of_attack, player2_Buttons, player1_PB);
     }
 
+    private void setProgressBar(int number_of_attack, ArrayList<Button> list, ProgressBar opponent_pb) {
+        switch (number_of_attack) {
+            case 1:
+                list.get(number_of_attack - 1).setEnabled(false);
+                decreasePB(opponent_pb, SMALL_ATTACK_POINTS);
+                break;
+            case 2:
+                list.get(number_of_attack - 1).setEnabled(false);
+                decreasePB(opponent_pb, MEDIUM_ATTACK_POINTS);
+                break;
+            case 3:
+                list.get(number_of_attack - 1).setEnabled(false);
+                decreasePB(opponent_pb, LARGE_ATTACK_POINTS);
+                break;
+        }
+
+    }
+
+    /* decrease progress bar by points */
     private void decreasePB(ProgressBar pb, int points) {
         pb.setProgress(pb.getProgress() - points);
         if(pb.getProgress() < 40) {
@@ -216,6 +231,7 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    /* open victory screen after game over */
     private void openVictoryActivity() {
         Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
         if(turn == PLAYER1_TURN)
@@ -225,18 +241,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /* add buttons of player_1 to list */
     private void initialize_player1_list() {
         player1_Buttons = new ArrayList<>();
-        player1_Buttons.add(largeAttack_player1);
-        player1_Buttons.add(mediumAttack_player1);
         player1_Buttons.add(smallAttack_player1);
+        player1_Buttons.add(mediumAttack_player1);
+        player1_Buttons.add(largeAttack_player1);
     }
 
+    /* add buttons of player_2 to list */
     private void initialize_player2_list() {
         player2_Buttons = new ArrayList<>();
-        player2_Buttons.add(largeAttack_player2);
-        player2_Buttons.add(mediumAttack_player2);
         player2_Buttons.add(smallAttack_player2);
+        player2_Buttons.add(mediumAttack_player2);
+        player2_Buttons.add(largeAttack_player2);
     }
 
     private void setValues() {

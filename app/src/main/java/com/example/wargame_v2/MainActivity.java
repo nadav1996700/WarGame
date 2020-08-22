@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /* make appropriate sound by attack points */
+    /* make appropriate sound according to attack points */
     private void makeSound(int number_of_attack) {
         switch(number_of_attack) {
             case 1:
@@ -224,6 +224,8 @@ public class MainActivity extends AppCompatActivity {
     /* if game over -> send victory name to Victory Activity and switch activity */
     private boolean gameOver() {
         if(player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
+            // release resources of MediaPlayer
+            mp.release();
             openVictoryActivity();
             finish();
             return true;

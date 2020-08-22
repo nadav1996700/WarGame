@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setValues() {
-        player1_PB = findViewById(R.id.main_PB_player1_PB);
-        player2_PB = findViewById(R.id.main_PB_player2_PB);
+        player1_PB = findViewById(R.id.main_PB_player1);
+        player2_PB = findViewById(R.id.main_PB_player2);
         largeAttack_player1 = findViewById(R.id.main_BTN_50pt_player1);
         mediumAttack_player1 = findViewById(R.id.main_BTN_30pt_player1);
         smallAttack_player1 = findViewById(R.id.main_BTN_10pt_player1);

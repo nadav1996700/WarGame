@@ -16,7 +16,7 @@
         android:layout_margin="8dp">
 
         <ProgressBar
-            android:id="@+id/main_PB_player1_PB"
+            android:id="@+id/main_PB_player1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -141,7 +141,7 @@
         android:layout_margin="8dp">
 
         <ProgressBar
-            android:id="@+id/main_PB_player2_PB"
+            android:id="@+id/main_PB_player2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"

@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar player1_PB;
     private ProgressBar player2_PB;
-    private ImageView player1_image;
-    private ImageView player2_image;
     private ImageView player1_cube;
     private ImageView player2_cube;
     private Button largeAttack_player1;
@@ -269,8 +267,8 @@ public class MainActivity extends AppCompatActivity {
         mediumAttack_player2 = findViewById(R.id.main_BTN_30pt_player2);
         smallAttack_player2 = findViewById(R.id.main_BTN_10pt_player2);
         pick = findViewById(R.id.main_BTN_pick);
-        player1_image = findViewById(R.id.main_IV_player1);
-        player2_image = findViewById(R.id.main_IV_player2);
+        ImageView player1_image = findViewById(R.id.main_IV_player1);
+        ImageView player2_image = findViewById(R.id.main_IV_player2);
         player1_cube = findViewById(R.id.main_IV_player1_Cube);
         player2_cube = findViewById(R.id.main_IV_player2_Cube);
 

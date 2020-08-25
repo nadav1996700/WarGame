@@ -3,4 +3,7 @@
     <string name="attack_50pt">50pt attack</string>
     <string name="attack_30pt">30pt attack</string>
     <string name="attack_10pt">10pt attack</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

@@ -29,7 +29,9 @@ public class HomeActivity extends AppCompatActivity {
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(RankActivity.class);
+                //openActivity(RankActivity.class);
+                Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+                startActivity(intent);
             }
         });
     }

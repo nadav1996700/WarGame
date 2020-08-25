@@ -5,6 +5,7 @@ import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressBar player1_PB;
     private ProgressBar player2_PB;
+    private ImageView player1_imageView;
+    private ImageView player2_imageView;
     private ImageView player1_cube;
     private ImageView player2_cube;
     private Button largeAttack_player1;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Button> player2_Buttons;
     private Random rand = new Random();
     private MediaPlayer mp;
+    private Location mCurrentLocation;
+    private int player1_counterAttack = 0;
+    private int player2_counterAttack = 0;
     private int turn = 0;
 
     Handler handler = new Handler();
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
                     Enable_buttons();
                     /* start game */
                     handler.postDelayed(runnable, DELAY);
-                }
+               }
             }
         });
     }
@@ -188,27 +194,25 @@ public class MainActivity extends AppCompatActivity {
     private void update_PB(int number_of_attack) {
         if (turn == PLAYER1_TURN)
             setProgressBar(number_of_attack, player1_Buttons, player2_PB);
-
-        else if (turn == PLAYER2_TURN)
+        else
             setProgressBar(number_of_attack, player2_Buttons, player1_PB);
     }
 
     private void setProgressBar(int number_of_attack, ArrayList<Button> list, ProgressBar opponent_pb) {
+        /* disable chosen attack button */
+        list.get(number_of_attack - 1).setEnabled(false);
+
         switch (number_of_attack) {
             case 1:
-                list.get(number_of_attack - 1).setEnabled(false);
                 decreasePB(opponent_pb, SMALL_ATTACK_POINTS);
                 break;
             case 2:
-                list.get(number_of_attack - 1).setEnabled(false);
                 decreasePB(opponent_pb, MEDIUM_ATTACK_POINTS);
                 break;
             case 3:
-                list.get(number_of_attack - 1).setEnabled(false);
                 decreasePB(opponent_pb, LARGE_ATTACK_POINTS);
                 break;
         }
-
     }
 
     /* decrease progress bar by points */
@@ -224,6 +228,9 @@ public class MainActivity extends AppCompatActivity {
         if(player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
             // release resources of MediaPlayer
             mp.release();
+            // set current location
+            //mCurrentLocation = ;
+            // open victory activity and finish
             openVictoryActivity();
             finish();
             return true;
@@ -234,11 +241,22 @@ public class MainActivity extends AppCompatActivity {
     /* open victory screen after game over */
     private void openVictoryActivity() {
         Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
-        if(turn == PLAYER1_TURN)
+        if(turn == PLAYER1_TURN) {  // player 2 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER2_NAME);
-        else
+            saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
+        }
+        else  {                     // player 1 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER1_NAME);
+            saveData(PLAYER1_NAME, player1_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
+        }
         startActivity(intent);
+    }
+
+    /* save data of winner in sharedPreferences */
+    private void saveData(String name, int counterOfAttacks, Location lastLocation) {
+        ArrayList<VictoryData> list;
+        My_SP sp = My_SP.initHelper(this);
+
     }
 
     /* add buttons of player_1 to list */
@@ -266,21 +284,24 @@ public class MainActivity extends AppCompatActivity {
         largeAttack_player2 = findViewById(R.id.main_BTN_50pt_player2);
         mediumAttack_player2 = findViewById(R.id.main_BTN_30pt_player2);
         smallAttack_player2 = findViewById(R.id.main_BTN_10pt_player2);
-        pick = findViewById(R.id.main_BTN_pick);
-        ImageView player1_image = findViewById(R.id.main_IV_player1);
-        ImageView player2_image = findViewById(R.id.main_IV_player2);
+        player1_imageView = findViewById(R.id.main_IV_player1);
+        player2_imageView = findViewById(R.id.main_IV_player2);
         player1_cube = findViewById(R.id.main_IV_player1_Cube);
         player2_cube = findViewById(R.id.main_IV_player2_Cube);
-
-        /* set images using glide library*/
-        setImage(player1_image, ContextCompat.getDrawable(this, R.drawable.superman));
-        setImage(player2_image, ContextCompat.getDrawable(this, R.drawable.iron));
-        setImage(player1_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
-        setImage(player2_cube, ContextCompat.getDrawable(this, R.drawable.dice_2));
+        pick = findViewById(R.id.main_BTN_pick);
+        setImages();
 
         /* initialize value of progress bars to 100 */
         player1_PB.setProgress(100);
         player2_PB.setProgress(100);
+    }
+
+    private void setImages() {
+        /* set images using glide library*/
+        setImage(player1_imageView, ContextCompat.getDrawable(this, R.drawable.superman));
+        setImage(player2_imageView, ContextCompat.getDrawable(this, R.drawable.iron));
+        setImage(player1_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
+        setImage(player2_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
     }
 
     /* set images using glide library*/
@@ -313,10 +334,15 @@ public class MainActivity extends AppCompatActivity {
         changeTurn();
     }
 
+    /* change turn and increase counter attack */
     private void changeTurn() {
-        if (turn == PLAYER1_TURN)
+        if (turn == PLAYER1_TURN) {
             turn = PLAYER2_TURN;
-        else
+            player1_counterAttack += 1;
+        }
+        else {
             turn = PLAYER1_TURN;
+            player2_counterAttack += 1;
+        }
     }
 }

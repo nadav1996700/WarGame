@@ -1,8 +1,10 @@
 package com.example.wargame_v2;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -175,19 +177,37 @@ public class MainActivity extends AppCompatActivity {
         mp.start();
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        /* start game only when turn has been set*/
-        if(!pick.isEnabled())
-            handler.postDelayed(runnable, DELAY);
-    }
-
     @Override
     protected void onStop() {
         super.onStop();
         handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        showAlertDialog();
+    }
+
+    private void showAlertDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Do you wish to continue?");
+        alert.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+                /* start game only when turn has been set*/
+                if(!pick.isEnabled())
+                    handler.postDelayed(runnable, DELAY);
+            }
+        });
+        alert.setNegativeButton("Home", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                MainActivity.this.finish();
+            }
+        });
+        alert.create().show();
     }
 
     /* update life bar */

@@ -2,10 +2,13 @@ package com.example.wargame_v2;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.MediaPlayer;
@@ -15,12 +18,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 //glide
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+// google maps
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -93,17 +104,17 @@ public class MainActivity extends AppCompatActivity {
                     Enable_buttons();
                     /* start game */
                     handler.postDelayed(runnable, DELAY);
-               }
+                }
             }
         });
     }
 
     /* enable buttons of the player that won in dice */
     private void Enable_buttons() {
-        if(turn == PLAYER1_TURN) {
+        if (turn == PLAYER1_TURN) {
             for (Button btn : player1_Buttons)
                 btn.setEnabled(true);
-        } else if(turn == PLAYER2_TURN) {
+        } else if (turn == PLAYER2_TURN) {
             for (Button btn : player2_Buttons)
                 btn.setEnabled(true);
         }
@@ -113,13 +124,12 @@ public class MainActivity extends AppCompatActivity {
         /* drop the cubes and choose random numbers */
         int player1_number = diceCube(player1_cube);
         int player2_number = diceCube(player2_cube);
-        if(player1_number > player2_number) {
+        if (player1_number > player2_number) {
             turn = PLAYER1_TURN;
             pick.setEnabled(false);
             return true;
-        }
-        else if (player2_number > player1_number) {
-            turn  = PLAYER2_TURN;
+        } else if (player2_number > player1_number) {
+            turn = PLAYER2_TURN;
             pick.setEnabled(false);
             return true;
         }
@@ -137,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* change cube photo using glide */
     private void change_IV(ImageView cube_image, int number) {
-        switch(number) {
+        switch (number) {
             case 1:
                 setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_1));
                 break;
@@ -161,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* make appropriate sound according to attack points */
     private void makeSound(int number_of_attack) {
-        switch(number_of_attack) {
+        switch (number_of_attack) {
             case 1:
                 mp = MediaPlayer.create(this, R.raw.small_points_sound);
                 break;
@@ -197,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.cancel();
                 /* start game only when turn has been set*/
-                if(!pick.isEnabled())
+                if (!pick.isEnabled())
                     handler.postDelayed(runnable, DELAY);
             }
         });
@@ -238,18 +248,18 @@ public class MainActivity extends AppCompatActivity {
     /* decrease progress bar by points */
     private void decreasePB(ProgressBar pb, int points) {
         pb.setProgress(pb.getProgress() - points);
-        if(pb.getProgress() < 40) {
+        if (pb.getProgress() < 40) {
             pb.setProgressDrawable(ContextCompat.getDrawable(this, R.drawable.red_progress_bar));
         }
     }
 
     /* if game over -> send victory name to Victory Activity and switch activity */
     private boolean gameOver() {
-        if(player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
+        if (player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
             // release resources of MediaPlayer
             mp.release();
-            // set current location
-            //mCurrentLocation = ;
+            // save current location
+            getCurrentLocation();
             // open victory activity and finish
             openVictoryActivity();
             finish();
@@ -261,22 +271,34 @@ public class MainActivity extends AppCompatActivity {
     /* open victory screen after game over */
     private void openVictoryActivity() {
         Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
-        if(turn == PLAYER1_TURN) {  // player 2 won
+        if (turn == PLAYER1_TURN) {  // player 2 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER2_NAME);
             saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
-        }
-        else  {                     // player 1 won
+        } else {                     // player 1 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER1_NAME);
             saveData(PLAYER1_NAME, player1_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
         }
         startActivity(intent);
     }
 
-    /* save data of winner in sharedPreferences */
-    private void saveData(String name, int counterOfAttacks, Location lastLocation) {
-        ArrayList<VictoryData> list;
+    /* save data of winner with sharedPreferences */
+    private void saveData(String name, int counterOfAttacks, Location location) {
+        ArrayList<VictoryData> list = new ArrayList<>();
         My_SP sp = My_SP.initHelper(this);
-
+        //list =;
+        if(list.size() == 10) {
+             // sort array by victories
+            Collections.sort(list, new Comparator<VictoryData>() {
+                @Override
+                public int compare(VictoryData v1, VictoryData v2) {
+                    return v1.get_victories() - v2.get_victories();
+                }
+            });
+            // remove object at the last place
+            list.remove(list.get(list.size()-1));
+        }
+        // add new object
+        list.add(new VictoryData(name, counterOfAttacks, location));
     }
 
     /* add buttons of player_1 to list */
@@ -338,8 +360,7 @@ public class MainActivity extends AppCompatActivity {
         if (turn == PLAYER1_TURN) {
             current = player1_Buttons;
             switchTo = player2_Buttons;
-        }
-        else {
+        } else {
             current = player2_Buttons;
             switchTo = player1_Buttons;
         }
@@ -347,9 +368,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void makeSwitch(ArrayList<Button> current, ArrayList<Button> switchTo) {
-        for(Button btn: current)
+        for (Button btn : current)
             btn.setEnabled(false);
-        for(Button btn: switchTo)
+        for (Button btn : switchTo)
             btn.setEnabled(true);
         changeTurn();
     }
@@ -359,10 +380,24 @@ public class MainActivity extends AppCompatActivity {
         if (turn == PLAYER1_TURN) {
             turn = PLAYER2_TURN;
             player1_counterAttack += 1;
-        }
-        else {
+        } else {
             turn = PLAYER1_TURN;
             player2_counterAttack += 1;
+        }
+    }
+
+    private void getCurrentLocation() {
+        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
+        // check permission granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Task<Location> task = client.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if(location != null)
+                        mCurrentLocation = location;
+                }
+            });
         }
     }
 }

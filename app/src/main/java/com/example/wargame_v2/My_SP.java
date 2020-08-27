@@ -35,13 +35,15 @@ public class My_SP {
         editor.apply();
     }
 
-    private void loadData(ArrayList<VictoryData> rank_list) {
+    private ArrayList<VictoryData> loadData() {
         Gson gson = new Gson();
         String json = prefs.getString(KEY, null);
         Type type = new TypeToken<ArrayList<VictoryData>>() {}.getType();
-        rank_list = gson.fromJson(json, type);
+        ArrayList<VictoryData> rank_list = gson.fromJson(json, type);
 
         if(rank_list == null)
-            rank_list = new ArrayList<>();
+            return new ArrayList<>();
+        else
+            return rank_list;
     }
 }

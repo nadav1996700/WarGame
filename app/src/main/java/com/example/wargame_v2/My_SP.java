@@ -2,10 +2,8 @@ package com.example.wargame_v2;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -27,7 +25,7 @@ public class My_SP {
         return instance;
     }
 
-    private void saveData(ArrayList<VictoryData> rank_list) {
+    public void saveData(ArrayList<VictoryData> rank_list) {
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
         String json = gson.toJson(rank_list);
@@ -35,7 +33,7 @@ public class My_SP {
         editor.apply();
     }
 
-    private ArrayList<VictoryData> loadData() {
+    public ArrayList<VictoryData> loadData() {
         Gson gson = new Gson();
         String json = prefs.getString(KEY, null);
         Type type = new TypeToken<ArrayList<VictoryData>>() {}.getType();

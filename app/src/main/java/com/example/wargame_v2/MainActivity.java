@@ -290,9 +290,10 @@ public class MainActivity extends AppCompatActivity {
 
     /* save data of winner with sharedPreferences */
     private void saveData(String name, int counterOfAttacks, Location location) {
-        ArrayList<VictoryData> list = new ArrayList<>();
-        My_SP sp = My_SP.initHelper(this);
-        //list =; load data from sp - sp.loadData()
+        ArrayList<VictoryData> list;
+        // load data from sharedPreferences
+        My_SP sp = My_SP.initHelper(MainActivity.this);
+        list = sp.loadData();
         if(list.size() == 10) {
              // sort array by victories
             Collections.sort(list, new Comparator<VictoryData>() {
@@ -304,8 +305,10 @@ public class MainActivity extends AppCompatActivity {
             // remove object at the last place
             list.remove(list.get(list.size()-1));
         }
-        // add new object
+        // add new object - list size is less than 10
         list.add(new VictoryData(name, counterOfAttacks, location));
+        // save back to sharedPreferences
+        sp.saveData(list);
     }
 
     /* add buttons of player_1 to list */

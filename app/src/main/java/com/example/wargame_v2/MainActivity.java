@@ -258,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
         if (player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
             // release resources of MediaPlayer
             mp.release();
-            // save current location
-            getCurrentLocation();
+            // save victory data
+            saveVictoryData();
             // open victory activity and finish
             openVictoryActivity();
             finish();
@@ -268,16 +268,23 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    private void saveVictoryData() {
+        // save current location
+        getCurrentLocation();
+        // save data of winner in sharedPreferences
+        if (turn == PLAYER1_TURN)  // player 2 won
+            saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);
+        else                       // player 1 won
+            saveData(PLAYER1_NAME, player1_counterAttack, mCurrentLocation);
+    }
+
     /* open victory screen after game over */
     private void openVictoryActivity() {
         Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
-        if (turn == PLAYER1_TURN) {  // player 2 won
+        if (turn == PLAYER1_TURN)  // player 2 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER2_NAME);
-            saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
-        } else {                     // player 1 won
+         else                    // player 1 won
             intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER1_NAME);
-            saveData(PLAYER1_NAME, player1_counterAttack, mCurrentLocation);             // save data of winner in sharedPreferences
-        }
         startActivity(intent);
     }
 
@@ -285,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveData(String name, int counterOfAttacks, Location location) {
         ArrayList<VictoryData> list = new ArrayList<>();
         My_SP sp = My_SP.initHelper(this);
-        //list =;
+        //list =; load data from sp - sp.loadData()
         if(list.size() == 10) {
              // sort array by victories
             Collections.sort(list, new Comparator<VictoryData>() {

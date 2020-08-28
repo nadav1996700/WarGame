@@ -17,6 +17,9 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        // init sp
+        My_SP sp = My_SP.initHelper(HomeActivity.this);
+
         // set value of buttons
         setValues();
 
@@ -30,14 +33,14 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //openActivity(RankActivity.class);
-                Intent intent = new Intent(HomeActivity.this, MapsActivity.class);
+                Intent intent = new Intent(HomeActivity.this, TopTenActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    private void openActivity(Class activity) {
-        Intent intent = new Intent(HomeActivity.this, activity);
+    private void openActivity(Class activity_class) {
+        Intent intent = new Intent(HomeActivity.this, activity_class);
         startActivity(intent);
     }
 

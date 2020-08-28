@@ -4,25 +4,25 @@ import android.location.Location;
 
 public class VictoryData {
     private String name;
-    private int victories;
+    private int attacks;
     private Location winnerLocation;
 
-    public VictoryData(String name, int victories, Location location) {
+    public VictoryData(String name, int attacks, Location location) {
         set_name(name);
-        set_victories(victories);
+        set_attacks(attacks);
         set_location(location);
     }
 
-    public int get_victories() {
-        return victories;
+    public int get_attacks() {
+        return attacks;
     }
 
     public String get_name() {
         return name;
     }
 
-    public void set_victories(int new_victories) {
-        this.victories = new_victories;
+    public void set_attacks(int new_attacks) {
+        this.attacks = new_attacks;
     }
 
     public void set_name(String new_name) {
@@ -35,5 +35,10 @@ public class VictoryData {
 
     public void set_location(Location location) {
         this.winnerLocation = location;
+    }
+
+    @Override
+    public String toString() {
+        return name + ": " + attacks;
     }
 }

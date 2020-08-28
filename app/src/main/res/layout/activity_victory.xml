@@ -46,4 +46,14 @@
         android:layout_below="@+id/victory_BTN_newGame"
         android:background="@drawable/rounded_button"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+        android:textSize="30sp"
+        android:layout_below="@+id/victory_BTN_home"
+        android:layout_toEndOf="@+id/victory_BTN_home"/>
+
 </RelativeLayout>

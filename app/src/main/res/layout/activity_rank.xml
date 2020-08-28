@@ -7,18 +7,5 @@
     android:orientation="vertical"
     tools:context=".RankActivity">
 
-    <fragment
-        android:id="@+id/rank_fragment_map"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:name="com.example.wargame_v2.MapsFragment"/>
-
-    <fragment
-        android:id="@+id/rank_fragment_rankList"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:name="com.example.wargame_v2.top10_Fragment"/>
 
 </LinearLayout>

@@ -291,22 +291,25 @@ public class MainActivity extends AppCompatActivity {
     /* save data of winner with sharedPreferences */
     private void saveData(String name, int counterOfAttacks, Location location) {
         ArrayList<VictoryData> list;
-        // load data from sharedPreferences
-        My_SP sp = My_SP.initHelper(MainActivity.this);
+        // load data from sharedPreferences (initialize in Home Activity)
+        My_SP sp = My_SP.getInstance();
         list = sp.loadData();
         if(list.size() == 10) {
-             // sort array by victories
+            // sort array by victories
             Collections.sort(list, new Comparator<VictoryData>() {
                 @Override
                 public int compare(VictoryData v1, VictoryData v2) {
-                    return v1.get_victories() - v2.get_victories();
+                    return v1.get_attacks() - v2.get_attacks();
                 }
             });
-            // remove object at the last place
-            list.remove(list.get(list.size()-1));
-        }
-        // add new object - list size is less than 10
-        list.add(new VictoryData(name, counterOfAttacks, location));
+            // replace object at the last place
+            if (list.get(list.size() - 1).get_attacks() > counterOfAttacks) {
+                list.remove(list.get(list.size() - 1));
+                list.add(new VictoryData(name, counterOfAttacks, location));
+            }
+        } else
+            // add new object - list size is less than 10
+            list.add(new VictoryData(name, counterOfAttacks, location));
         // save back to sharedPreferences
         sp.saveData(list);
     }
@@ -401,7 +404,7 @@ public class MainActivity extends AppCompatActivity {
         // check permission granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             Task<Location> task = client.getLastLocation();
-            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            task.addOnSuccessListener(this, new OnSuccessListener<Location>() {
                 @Override
                 public void onSuccess(Location location) {
                     if(location != null)

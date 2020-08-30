@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity_Rank">
+    tools:context="com.example.wargame_v2.Activities.Activity_Rank">
 
 
 </LinearLayout>

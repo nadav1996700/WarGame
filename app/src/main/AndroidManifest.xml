@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.wargame_v2">
-    <!--
-         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but you must specify either coarse or fine
-         location permissions for the "MyLocation" functionality.
-    -->
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -22,18 +18,18 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".Activity_Maps"
+            android:name="com.example.wargame_v2.Activities.Activity_Maps"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_maps"
             android:screenOrientation="sensorLandscape" />
 
         <activity
-            android:name=".Activity_Top10"
+            android:name="com.example.wargame_v2.Activities.Activity_Top10"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape"/>
 
         <activity
-            android:name=".Activity_Home"
+            android:name="com.example.wargame_v2.Activities.Activity_Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -43,15 +39,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activity_Game"
+            android:name="com.example.wargame_v2.Activities.Activity_Game"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".Activity_Victory"
+            android:name="com.example.wargame_v2.Activities.Activity_Victory"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name=".Activity_Rank"
+            android:name="com.example.wargame_v2.Activities.Activity_Rank"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
     </application>

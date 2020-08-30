@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/winner_podium"
-    tools:context=".Activity_Victory">
+    tools:context="com.example.wargame_v2.Activities.Activity_Victory">
 
     <TextView
         android:id="@+id/victory_TV_title"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFEB3B"
     android:orientation="vertical"
-    tools:context=".Activity_Top10">
+    tools:context="com.example.wargame_v2.Activities.Activity_Top10">
 
     <TextView
         android:layout_width="wrap_content"

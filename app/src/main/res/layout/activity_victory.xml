@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/winner_podium"
-    tools:context=".VictoryActivity">
+    tools:context=".Activity_Victory">
 
     <TextView
         android:id="@+id/victory_TV_title"
@@ -45,15 +45,5 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/victory_BTN_newGame"
         android:background="@drawable/rounded_button"/>
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text=""
-        android:textColor="@color/colorPrimary"
-        android:textSize="30sp"
-        android:layout_below="@+id/victory_BTN_home"
-        android:layout_toEndOf="@+id/victory_BTN_home"/>
 
 </RelativeLayout>

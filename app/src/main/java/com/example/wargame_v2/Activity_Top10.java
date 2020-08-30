@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class TopTenActivity extends AppCompatActivity {
+public class Activity_Top10 extends AppCompatActivity {
 
     private TextView place1;
     private TextView place2;

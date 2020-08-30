@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#FFEB3B"
     android:orientation="vertical"
-    tools:context=".TopTenActivity">
+    tools:context=".Activity_Top10">
 
     <TextView
         android:layout_width="wrap_content"

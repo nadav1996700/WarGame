@@ -39,6 +39,6 @@ public class VictoryData {
 
     @Override
     public String toString() {
-        return name + ": " + attacks;
+        return name + ": " + attacks + ", " + winnerLocation;
     }
 }

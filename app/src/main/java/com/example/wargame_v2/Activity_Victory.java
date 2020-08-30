@@ -9,9 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
-public class VictoryActivity extends AppCompatActivity {
+public class Activity_Victory extends AppCompatActivity {
 
     public static final String EXTRA_KEY_VICTORY = "EXTRA_VICTORY";
     private TextView victory_TV;
@@ -23,11 +21,6 @@ public class VictoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_victory);
 
-        /*
-        TextView tv = findViewById(R.id.textView);
-        ArrayList<VictoryData> list = My_SP.getInstance().loadData();
-        tv.setText("" + list.get(0).get_location());
-         */
         // initialize variables
         setValues();
 
@@ -39,7 +32,7 @@ public class VictoryActivity extends AppCompatActivity {
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(MainActivity.class);
+                openActivity(Activity_Game.class);
                 finish();
             }
         });
@@ -59,7 +52,7 @@ public class VictoryActivity extends AppCompatActivity {
     }
 
     private void openActivity(Class activity) {
-        Intent intent = new Intent(VictoryActivity.this, activity);
+        Intent intent = new Intent(Activity_Victory.this, activity);
         startActivity(intent);
     }
 }

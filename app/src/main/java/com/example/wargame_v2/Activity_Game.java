@@ -6,11 +6,13 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,19 +24,15 @@ import android.widget.ProgressBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 // google maps
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+//import com.google.android.gms.location.LocationListener;
+import android.location.LocationListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class Activity_Game extends AppCompatActivity {
 
     private static final int PLAYER1_TURN = 1;
     private static final int PLAYER2_TURN = 2;
@@ -214,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setNegativeButton("Home", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                MainActivity.this.finish();
+                Activity_Game.this.finish();
             }
         });
         alert.create().show();
@@ -280,11 +278,11 @@ public class MainActivity extends AppCompatActivity {
 
     /* open victory screen after game over */
     private void openVictoryActivity() {
-        Intent intent = new Intent(MainActivity.this, VictoryActivity.class);
+        Intent intent = new Intent(Activity_Game.this, Activity_Victory.class);
         if (turn == PLAYER1_TURN)  // player 2 won
-            intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER2_NAME);
-         else                    // player 1 won
-            intent.putExtra(VictoryActivity.EXTRA_KEY_VICTORY, PLAYER1_NAME);
+            intent.putExtra(Activity_Victory.EXTRA_KEY_VICTORY, PLAYER2_NAME);
+        else                    // player 1 won
+            intent.putExtra(Activity_Victory.EXTRA_KEY_VICTORY, PLAYER1_NAME);
         startActivity(intent);
     }
 
@@ -294,7 +292,7 @@ public class MainActivity extends AppCompatActivity {
         // load data from sharedPreferences (initialize in Home Activity)
         My_SP sp = My_SP.getInstance();
         list = sp.loadData();
-        if(list.size() == 10) {
+        if (list.size() == 10) {
             // sort array by victories
             Collections.sort(list, new Comparator<VictoryData>() {
                 @Override
@@ -361,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
 
     /* set images using glide library*/
     private void setImage(ImageView iv, Drawable photo) {
-        Glide.with(MainActivity.this)
+        Glide.with(Activity_Game.this)
                 .load(photo)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .into(iv);
@@ -399,18 +397,22 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     private void getCurrentLocation() {
-        FusedLocationProviderClient client = LocationServices.getFusedLocationProviderClient(this);
-        // check permission granted
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            Task<Location> task = client.getLastLocation();
-            task.addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    if(location != null)
-                        mCurrentLocation = location;
-                }
-            });
+        LocationManager locationManager;
+        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
         }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListner);
     }
+
+
+    LocationListener locationListner = new LocationListener() {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            mCurrentLocation = location;
+        }
+    };
 }

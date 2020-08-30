@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class HomeActivity extends AppCompatActivity {
+public class Activity_Home extends AppCompatActivity {
 
     private Button startGame;
     private Button rank;
@@ -18,7 +18,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         // init sp
-        My_SP sp = My_SP.initHelper(HomeActivity.this);
+        My_SP sp = My_SP.initHelper(Activity_Home.this);
 
         // set value of buttons
         setValues();
@@ -26,21 +26,21 @@ public class HomeActivity extends AppCompatActivity {
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(MainActivity.class);
+                openActivity(Activity_Game.class);
             }
         });
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //openActivity(RankActivity.class);
-                Intent intent = new Intent(HomeActivity.this, TopTenActivity.class);
+                Intent intent = new Intent(Activity_Home.this, Activity_Top10.class);
                 startActivity(intent);
             }
         });
     }
 
     private void openActivity(Class activity_class) {
-        Intent intent = new Intent(HomeActivity.this, activity_class);
+        Intent intent = new Intent(Activity_Home.this, activity_class);
         startActivity(intent);
     }
 

@@ -13,7 +13,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class Activity_Maps extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 

@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import java.util.ArrayList;
 
-public class RankActivity extends AppCompatActivity {
+public class Activity_Rank extends AppCompatActivity {
 
     /*
     private Fragment MapsFragment;

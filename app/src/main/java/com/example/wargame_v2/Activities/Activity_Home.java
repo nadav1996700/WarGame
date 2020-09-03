@@ -28,16 +28,13 @@ public class Activity_Home extends AppCompatActivity {
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                openActivity(Activity_Game.class);
+            public void onClick(View view) { openActivity(Activity_Game.class);
             }
         });
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //openActivity(RankActivity.class);
-                Intent intent = new Intent(Activity_Home.this, Activity_Top10.class);
-                startActivity(intent);
+                openActivity(Activity_Top10.class);
             }
         });
     }

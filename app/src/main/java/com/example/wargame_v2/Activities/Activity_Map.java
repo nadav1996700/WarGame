@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class Activity_Maps extends FragmentActivity implements OnMapReadyCallback {
+public class Activity_Map extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -36,12 +36,17 @@ public class Activity_Maps extends FragmentActivity implements OnMapReadyCallbac
 
         ArrayList<VictoryData> list = My_SP.getInstance().loadData();
         for(VictoryData data: list) {
-            //LatLng location = new LatLng(60, 80);
-            LatLng location = new LatLng(data.get_location().getLatitude(), data.get_location().getLongitude());
-            googleMap.addMarker(new MarkerOptions().position(location).title(""));
+            if(data.get_location() != null) {
+                LatLng location = new LatLng(data.get_location().getLatitude(), data.get_location().getLongitude());
+                googleMap.addMarker(new MarkerOptions().position(location).title(""));
+            }
         }
-
-        LatLng sydney = new LatLng(-34, 151);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if(list.size() >= 1 && list.get(0).get_location() != null) {
+            LatLng location = new LatLng(list.get(0).get_location().getLatitude(), list.get(0).get_location().getLongitude());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+        } else {
+            LatLng tel_aviv = new LatLng(32.109333, 34.855499);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(tel_aviv));
+        }
     }
 }

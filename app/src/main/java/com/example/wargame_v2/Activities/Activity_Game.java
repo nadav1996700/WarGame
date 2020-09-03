@@ -1,17 +1,16 @@
 package com.example.wargame_v2.Activities;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,14 +28,15 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;;
 import com.example.wargame_v2.R;
 import com.example.wargame_v2.Utils.My_SP;
 import com.example.wargame_v2.Utils.VictoryData;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Random;
-
-// google maps
-//import com.google.android.gms.location.LocationListener;
 
 public class Activity_Game extends AppCompatActivity {
 
@@ -66,6 +66,8 @@ public class Activity_Game extends AppCompatActivity {
     private ArrayList<Button> player2_Buttons;
     private Random rand = new Random();
     private MediaPlayer mp;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static  final int REQUEST_CODE = 101;
     private Location mCurrentLocation;
     private int player1_counterAttack = 0;
     private int player2_counterAttack = 0;
@@ -234,7 +236,7 @@ public class Activity_Game extends AppCompatActivity {
 
     private void setProgressBar(int number_of_attack, ArrayList<Button> list, ProgressBar opponent_pb) {
         /* disable chosen attack button */
-        list.get(number_of_attack - 1).setEnabled(false);
+        (list.get(number_of_attack - 1)).setEnabled(false);
 
         switch (number_of_attack) {
             case 1:
@@ -262,6 +264,8 @@ public class Activity_Game extends AppCompatActivity {
         if (player1_PB.getProgress() == 0 || player2_PB.getProgress() == 0) {
             // release resources of MediaPlayer
             mp.release();
+            // get location
+            getCurrentLocation();
             // save victory data
             saveVictoryData();
             // open victory activity and finish
@@ -273,8 +277,6 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void saveVictoryData() {
-        // save current location
-        getCurrentLocation();
         // save data of winner in sharedPreferences
         if (turn == PLAYER1_TURN)  // player 2 won
             saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);
@@ -405,20 +407,23 @@ public class Activity_Game extends AppCompatActivity {
 
 
     private void getCurrentLocation() {
-        LocationManager locationManager;
-        locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListner);
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        fetchLastLocation();
     }
 
-
-    LocationListener locationListner = new LocationListener() {
-
-        @Override
-        public void onLocationChanged(Location location) {
-            mCurrentLocation = location;
+    private void fetchLastLocation() {
+        if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+        PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+            // wait for permission
+            while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED);
         }
-    };
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) { mCurrentLocation = location; }
+            });
+    }
 }

@@ -334,7 +334,7 @@ public class Activity_Game extends AppCompatActivity {
         player2_Buttons.add(largeAttack_player2);
     }
 
-    private void setValues() {
+    private void setValues() { //
         player1_PB = findViewById(R.id.Game_PB_player1);
         player2_PB = findViewById(R.id.Game_PB_player2);
         largeAttack_player1 = findViewById(R.id.Game_BTN_50pt_player1);

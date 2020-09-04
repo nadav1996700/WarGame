@@ -408,7 +408,7 @@ public class Activity_Game extends AppCompatActivity {
 
     private void getCurrentLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();//k
+        fetchLastLocation();
     }
 
     private void fetchLastLocation() {

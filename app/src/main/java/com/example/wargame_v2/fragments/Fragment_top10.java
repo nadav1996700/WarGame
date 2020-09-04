@@ -40,11 +40,6 @@ public class Fragment_top10 extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // add text views to tv_list
-        initializeList();
-        // get data from sharedPreferences
-        setData();
     }
 
     @Override
@@ -54,6 +49,10 @@ public class Fragment_top10 extends Fragment {
             view = inflater.inflate(R.layout.fragment_top10, container, false);
 
         setValues(view);
+        // add text views to tv_list
+        initializeList();
+        // get data from sharedPreferences
+        setData();
         return view;
     }
 

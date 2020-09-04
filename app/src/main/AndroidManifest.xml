@@ -49,7 +49,7 @@
         <activity
             android:name="com.example.wargame_v2.Activities.Activity_Rank"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="sensorLandscape" />
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

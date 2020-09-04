@@ -18,17 +18,6 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Map"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_maps"
-            android:screenOrientation="sensorLandscape" />
-
-        <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Top10"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="sensorLandscape"/>
-
-        <activity
             android:name="com.example.wargame_v2.Activities.Activity_Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape">

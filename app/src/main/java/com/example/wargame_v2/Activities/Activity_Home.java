@@ -34,7 +34,7 @@ public class Activity_Home extends AppCompatActivity {
         rank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(Activity_Top10.class);
+                openActivity(Activity_Rank.class);
             }
         });
     }

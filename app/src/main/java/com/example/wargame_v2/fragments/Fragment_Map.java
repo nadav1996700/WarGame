@@ -21,7 +21,12 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 
-public class MapsFragment extends Fragment {
+public class Fragment_Map extends Fragment {
+
+    public static Fragment_Map newInstance() {
+        Fragment_Map fragment = new Fragment_Map();
+        return fragment;
+    }
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -29,12 +34,18 @@ public class MapsFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             ArrayList<VictoryData> list = My_SP.getInstance().loadData();
             for(VictoryData data: list) {
-                LatLng location = new LatLng(data.get_location().getLatitude(), data.get_location().getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(location).title("" + data.get_attacks()));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+                if(data.get_location() != null) {
+                    LatLng location = new LatLng(data.get_location().getLatitude(), data.get_location().getLongitude());
+                    googleMap.addMarker(new MarkerOptions().position(location).title(""));
+                }
             }
-            //LatLng sydney = new LatLng(-34, 151);
-            //googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+            if(list.size() >= 1 && list.get(0).get_location() != null) {
+                LatLng location = new LatLng(list.get(0).get_location().getLatitude(), list.get(0).get_location().getLongitude());
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            } else {
+                LatLng tel_aviv = new LatLng(32.109333, 34.855499);
+                googleMap.moveCamera(CameraUpdateFactory.newLatLng(tel_aviv));
+            }
         }
     };
 

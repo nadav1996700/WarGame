@@ -6,15 +6,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
-import android.location.LocationProvider;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -415,15 +414,14 @@ public class Activity_Game extends AppCompatActivity {
         if(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
         PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            // wait for permission
-            //while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    //PackageManager.PERMISSION_GRANTED);
+                    { Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE);
         }
             Task<Location> task = fusedLocationProviderClient.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
-                public void onSuccess(Location location) { mCurrentLocation = location; }
+                public void onSuccess(Location location) {
+                    mCurrentLocation = location;
+                }
             });
     }
 }

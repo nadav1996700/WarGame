@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,7 +92,7 @@ public class Activity_Game extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_game);
         /* initialize values */
         setValues();
         /* add buttons to lists */
@@ -336,19 +335,19 @@ public class Activity_Game extends AppCompatActivity {
     }
 
     private void setValues() {
-        player1_PB = findViewById(R.id.main_PB_player1);
-        player2_PB = findViewById(R.id.main_PB_player2);
-        largeAttack_player1 = findViewById(R.id.main_BTN_50pt_player1);
-        mediumAttack_player1 = findViewById(R.id.main_BTN_30pt_player1);
-        smallAttack_player1 = findViewById(R.id.main_BTN_10pt_player1);
-        largeAttack_player2 = findViewById(R.id.main_BTN_50pt_player2);
-        mediumAttack_player2 = findViewById(R.id.main_BTN_30pt_player2);
-        smallAttack_player2 = findViewById(R.id.main_BTN_10pt_player2);
-        player1_imageView = findViewById(R.id.main_IV_player1);
-        player2_imageView = findViewById(R.id.main_IV_player2);
-        player1_cube = findViewById(R.id.main_IV_player1_Cube);
-        player2_cube = findViewById(R.id.main_IV_player2_Cube);
-        pick = findViewById(R.id.main_BTN_pick);
+        player1_PB = findViewById(R.id.Game_PB_player1);
+        player2_PB = findViewById(R.id.Game_PB_player2);
+        largeAttack_player1 = findViewById(R.id.Game_BTN_50pt_player1);
+        mediumAttack_player1 = findViewById(R.id.Game_BTN_30pt_player1);
+        smallAttack_player1 = findViewById(R.id.Game_BTN_10pt_player1);
+        largeAttack_player2 = findViewById(R.id.Game_BTN_50pt_player2);
+        mediumAttack_player2 = findViewById(R.id.Game_BTN_30pt_player2);
+        smallAttack_player2 = findViewById(R.id.Game_BTN_10pt_player2);
+        player1_imageView = findViewById(R.id.Game_IV_player1);
+        player2_imageView = findViewById(R.id.Game_IV_player2);
+        player1_cube = findViewById(R.id.Game_IV_player1_Cube);
+        player2_cube = findViewById(R.id.Game_IV_player2_Cube);
+        pick = findViewById(R.id.Game_BTN_pick);
         setImages();
 
         /* initialize value of progress bars to 100 */

@@ -21,7 +21,7 @@
 
 
         <TextView
-            android:id="@+id/top_ten_places"
+            android:id="@+id/top10_LBL_places"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""

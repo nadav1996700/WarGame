@@ -16,7 +16,7 @@
         android:layout_margin="8dp">
 
         <ProgressBar
-            android:id="@+id/main_PB_player1"
+            android:id="@+id/Game_PB_player1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -26,12 +26,12 @@
             android:progressDrawable="@drawable/green_progress_bar"/>
 
         <ImageView
-            android:id="@+id/main_IV_player1"
+            android:id="@+id/Game_IV_player1"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
 
         <ImageView
-            android:id="@+id/main_IV_player1_Cube"
+            android:id="@+id/Game_IV_player1_Cube"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -46,7 +46,7 @@
         android:padding="10dp">
 
         <Button
-            android:id="@+id/main_BTN_50pt_player1"
+            android:id="@+id/Game_BTN_50pt_player1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -55,7 +55,7 @@
             android:background="#B1BAA6"/>
 
         <Button
-            android:id="@+id/main_BTN_30pt_player1"
+            android:id="@+id/Game_BTN_30pt_player1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -65,7 +65,7 @@
             android:background="#B1BAA6"/>
 
         <Button
-            android:id="@+id/main_BTN_10pt_player1"
+            android:id="@+id/Game_BTN_10pt_player1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -84,7 +84,7 @@
         android:padding="10dp">
 
             <Button
-                android:id="@+id/main_BTN_pick"
+                android:id="@+id/Game_BTN_pick"
                 android:layout_width="85dp"
                 android:layout_height="80dp"
                 android:background="@drawable/rounded_button"
@@ -103,7 +103,7 @@
         android:padding="10dp">
 
         <Button
-            android:id="@+id/main_BTN_50pt_player2"
+            android:id="@+id/Game_BTN_50pt_player2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -112,7 +112,7 @@
             android:background="#B1BAA6"/>
 
         <Button
-            android:id="@+id/main_BTN_30pt_player2"
+            android:id="@+id/Game_BTN_30pt_player2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -122,7 +122,7 @@
             android:background="#B1BAA6"/>
 
         <Button
-            android:id="@+id/main_BTN_10pt_player2"
+            android:id="@+id/Game_BTN_10pt_player2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -141,7 +141,7 @@
         android:layout_margin="8dp">
 
         <ProgressBar
-            android:id="@+id/main_PB_player2"
+            android:id="@+id/Game_PB_player2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
@@ -151,12 +151,12 @@
             android:progressDrawable="@drawable/green_progress_bar"/>
 
         <ImageView
-            android:id="@+id/main_IV_player2"
+            android:id="@+id/Game_IV_player2"
             android:layout_width="match_parent"
             android:layout_height="100dp" />
 
         <ImageView
-            android:id="@+id/main_IV_player2_Cube"
+            android:id="@+id/Game_IV_player2_Cube"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

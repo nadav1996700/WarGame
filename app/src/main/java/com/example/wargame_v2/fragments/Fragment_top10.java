@@ -38,7 +38,7 @@ public class Fragment_top10 extends Fragment {
         if(view == null)
             view = inflater.inflate(R.layout.fragment_top10, container, false);
 
-        places = view.findViewById(R.id.top_ten_places);
+        places = view.findViewById(R.id.top10_LBL_places);
         // get data from sharedPreferences
         setData();
         return view;

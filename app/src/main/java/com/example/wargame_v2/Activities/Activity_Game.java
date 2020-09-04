@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat;
 
 //glide
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import com.example.wargame_v2.R;
 import com.example.wargame_v2.Utils.My_SP;
@@ -408,7 +408,7 @@ public class Activity_Game extends AppCompatActivity {
 
     private void getCurrentLocation() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+        fetchLastLocation();//k
     }
 
     private void fetchLastLocation() {
@@ -417,8 +417,8 @@ public class Activity_Game extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]
                     {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
             // wait for permission
-            while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED);
+            //while(ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    //PackageManager.PERMISSION_GRANTED);
         }
             Task<Location> task = fusedLocationProviderClient.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {

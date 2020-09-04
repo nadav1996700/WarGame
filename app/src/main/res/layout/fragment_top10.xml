@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFEB3B"
+    android:orientation="vertical"
+    tools:context="com.example.wargame_v2.Activities.Activity_Top10">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:text="Top 10"
+        android:textColor="#F44336"
+        android:textSize="50sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/top_ten_tv_place1"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="1. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place2"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="2. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place3"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="3. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place4"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="4. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place5"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="5. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/top_ten_tv_place6"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="6. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place7"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="7. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place8"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="8. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place9"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="9. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+
+            <TextView
+                android:id="@+id/top_ten_tv_place10"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:text="10. "
+                android:textColor="#1837E6"
+                android:textSize="30sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

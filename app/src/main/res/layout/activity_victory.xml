@@ -4,8 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/winner_podium"
     tools:context="com.example.wargame_v2.Activities.Activity_Victory">
+
+    <ImageView
+        android:id="@+id/victory_IV_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:id="@+id/victory_LBL_title"
@@ -13,7 +18,7 @@
         android:layout_height="wrap_content"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:text="SUPERMAN WON!"
+        android:text="@string/SuperMan_Won"
         android:textColor="#F44336"
         android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true" />
@@ -25,7 +30,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="New Game"
+        android:text="@string/New_Game"
         android:textColor="#DEE3E2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
@@ -39,7 +44,7 @@
         android:padding="10dp"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="Home"
+        android:text="@string/Home"
         android:textColor="#DEE3E2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"

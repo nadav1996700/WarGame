@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -19,12 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-//glide
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
 import com.example.wargame_v2.R;
 import com.example.wargame_v2.Utils.My_SP;
+import com.example.wargame_v2.Utils.Utils;
 import com.example.wargame_v2.Utils.VictoryData;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -62,10 +58,11 @@ public class Activity_Game extends AppCompatActivity {
     private Button pick;
     private ArrayList<Button> player1_Buttons;
     private ArrayList<Button> player2_Buttons;
+    private Utils utils = Utils.getInstance();
     private Random rand = new Random();
     private MediaPlayer mp;
     private FusedLocationProviderClient fusedLocationProviderClient;
-    private static  final int REQUEST_CODE = 101;
+    private static final int REQUEST_CODE = 101;
     private Location mCurrentLocation;
     private int player1_counterAttack = 0;
     private int player2_counterAttack = 0;
@@ -153,22 +150,22 @@ public class Activity_Game extends AppCompatActivity {
     private void change_IV(ImageView cube_image, int number) {
         switch (number) {
             case 1:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_1));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_1));
                 break;
             case 2:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_2));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_2));
                 break;
             case 3:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_3));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_3));
                 break;
             case 4:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_4));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_4));
                 break;
             case 5:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_5));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_5));
                 break;
             case 6:
-                setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_6));
+                utils.setImage(cube_image, ContextCompat.getDrawable(this, R.drawable.dice_6));
                 break;
         }
     }
@@ -295,7 +292,7 @@ public class Activity_Game extends AppCompatActivity {
     /* save data of winner with sharedPreferences */
     private void saveData(String name, int counterOfAttacks, Location location) {
         ArrayList<VictoryData> list;
-        // load data from sharedPreferences (initialize in Home Activity)
+        // load data from sharedPreferences
         My_SP sp = My_SP.getInstance();
         list = sp.loadData();
         if (list.size() == 10) {
@@ -357,18 +354,10 @@ public class Activity_Game extends AppCompatActivity {
 
     private void setImages() {
         /* set images using glide library*/
-        setImage(player1_imageView, ContextCompat.getDrawable(this, R.drawable.superman));
-        setImage(player2_imageView, ContextCompat.getDrawable(this, R.drawable.iron));
-        setImage(player1_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
-        setImage(player2_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
-    }
-
-    /* set images using glide library*/
-    private void setImage(ImageView iv, Drawable photo) {
-        Glide.with(Activity_Game.this)
-                .load(photo)
-                .diskCacheStrategy(DiskCacheStrategy.NONE)
-                .into(iv);
+        utils.setImage(player1_imageView, ContextCompat.getDrawable(this, R.drawable.superman));
+        utils.setImage(player2_imageView, ContextCompat.getDrawable(this, R.drawable.iron));
+        utils.setImage(player1_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
+        utils.setImage(player2_cube, ContextCompat.getDrawable(this, R.drawable.dice_1));
     }
 
     private void switchTurn() {

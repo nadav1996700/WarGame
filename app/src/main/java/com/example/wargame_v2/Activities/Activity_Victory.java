@@ -1,15 +1,18 @@
 package com.example.wargame_v2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.wargame_v2.R;
+import com.example.wargame_v2.Utils.Utils;
 
 public class Activity_Victory extends AppCompatActivity {
 
@@ -17,6 +20,7 @@ public class Activity_Victory extends AppCompatActivity {
     private TextView victory_TV;
     private Button newGame;
     private Button home_screen;
+    private ImageView background;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +29,10 @@ public class Activity_Victory extends AppCompatActivity {
 
         // initialize variables
         setValues();
-
+        // init Glide
+        Utils glide_util = Utils.getInstance();
+        // set background image
+        glide_util.setImage(background, ContextCompat.getDrawable(this, R.drawable.winner_podium));
         // get victory name and set TextView
         Intent input = getIntent();
         String victory = input.getStringExtra(EXTRA_KEY_VICTORY);
@@ -34,7 +41,7 @@ public class Activity_Victory extends AppCompatActivity {
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openActivity(Activity_Game.class);
+                startActivity(new Intent(Activity_Victory.this, Activity_Game.class));
                 finish();
             }
         });
@@ -51,10 +58,6 @@ public class Activity_Victory extends AppCompatActivity {
         newGame = findViewById(R.id.victory_BTN_newGame);
         home_screen = findViewById(R.id.victory_BTN_home);
         victory_TV = findViewById(R.id.victory_LBL_title);
-    }
-
-    private void openActivity(Class activity) {
-        Intent intent = new Intent(Activity_Victory.this, activity);
-        startActivity(intent);
+        background = findViewById(R.id.victory_IV_background);
     }
 }

@@ -63,20 +63,22 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
     }
 
     private void setDataOnMap(GoogleMap googleMap) {
+        // initialize camera location
+        LatLng tel_aviv = new LatLng(32.109333, 34.855499);
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(tel_aviv));
+        // load data of victories to list
         ArrayList<VictoryData> list = My_SP.getInstance().loadData();
+        // add marker for every winner
         for(VictoryData winner: list) {
             if(winner.get_location() != null) {
                 LatLng location = new LatLng(winner.get_location().getLatitude(), winner.get_location().getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()));
+                googleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()
+                + "," + winner.get_attacks()));
             }
         }
         if(list.size() >= 1 && list.get(0).get_location() != null) {
             LatLng location = new LatLng(list.get(0).get_location().getLatitude(), list.get(0).get_location().getLongitude());
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        } else {
-            LatLng tel_aviv = new LatLng(32.109333, 34.855499);
-            googleMap.addMarker(new MarkerOptions().position(tel_aviv).title("Tel-Aviv"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(tel_aviv));
         }
     }
 }

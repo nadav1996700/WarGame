@@ -2,6 +2,8 @@ package com.example.wargame_v2.Utils;
 
 import android.location.Location;
 
+import androidx.annotation.NonNull;
+
 public class VictoryData {
     private String name;
     private int attacks;
@@ -39,6 +41,6 @@ public class VictoryData {
 
     @Override
     public String toString() {
-        return name + ": " + attacks + ", " + winnerLocation;
+        return name + ": " + attacks;
     }
 }

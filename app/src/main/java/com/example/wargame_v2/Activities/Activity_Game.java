@@ -215,7 +215,7 @@ public class Activity_Game extends AppCompatActivity {
         alert.setNegativeButton("Home", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Activity_Game.this.finish();
+                finish();
             }
         });
         alert.create().show();

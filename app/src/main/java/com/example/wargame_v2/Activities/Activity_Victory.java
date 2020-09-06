@@ -15,6 +15,7 @@ import com.example.wargame_v2.Utils.Utils;
 public class Activity_Victory extends AppCompatActivity {
 
     public static final String EXTRA_KEY_VICTORY = "EXTRA_VICTORY";
+    public static final String EXTRA_KEY_ATTACKS = "EXTRA_ATTACKS";
     private TextView victory_TV;
     private Button newGame;
     private Button home_screen;
@@ -29,10 +30,8 @@ public class Activity_Victory extends AppCompatActivity {
         setValues();
         // set background image
         Utils.getInstance().setImage(background, ContextCompat.getDrawable(this, R.drawable.winner_podium));
-        // get victory name and set TextView
-        Intent input = getIntent();
-        String victory = input.getStringExtra(EXTRA_KEY_VICTORY);
-        victory_TV.setText(victory + " WON!");
+        // set text of TextView
+        setVictoryText();
 
         newGame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +47,14 @@ public class Activity_Victory extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    // get victory name and attacks counter and set TextView
+    private void setVictoryText() {
+        Intent input = getIntent();
+        String victory = input.getStringExtra(EXTRA_KEY_VICTORY);
+        int attacks = input.getIntExtra(EXTRA_KEY_ATTACKS, 0);
+        victory_TV.setText(victory + " WON!" + "\n" + "  with " + attacks + " strikes");
     }
 
     private void setValues() {

@@ -273,10 +273,14 @@ public class Activity_Game extends AppCompatActivity {
     /* open victory screen after game over */
     private void openVictoryActivity() {
         Intent intent = new Intent(Activity_Game.this, Activity_Victory.class);
-        if (turn == PLAYER1_TURN)  // player 2 won
+        if (turn == PLAYER1_TURN) { // player 2 won
             intent.putExtra(Activity_Victory.EXTRA_KEY_VICTORY, PLAYER2_NAME);
-        else                    // player 1 won
+            intent.putExtra(Activity_Victory.EXTRA_KEY_ATTACKS, player2_counterAttack);
+        }
+        else {                      // player 1 won
             intent.putExtra(Activity_Victory.EXTRA_KEY_VICTORY, PLAYER1_NAME);
+            intent.putExtra(Activity_Victory.EXTRA_KEY_ATTACKS, player1_counterAttack);
+        }
         startActivity(intent);
     }
 

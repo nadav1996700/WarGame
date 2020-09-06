@@ -1,15 +1,15 @@
 package com.example.wargame_v2.Utils;
 
-import android.location.Location;
-
 import androidx.annotation.NonNull;
+import com.google.android.gms.maps.model.LatLng;
 
 public class VictoryData {
+
     private String name;
     private int attacks;
-    private Location winnerLocation;
+    private LatLng winnerLocation;
 
-    public VictoryData(String name, int attacks, Location location) {
+    public VictoryData(String name, int attacks, LatLng location) {
         set_name(name);
         set_attacks(attacks);
         set_location(location);
@@ -31,11 +31,11 @@ public class VictoryData {
         this.name = new_name;
     }
 
-    public Location get_location() {
+    public LatLng get_location() {
         return winnerLocation;
     }
 
-    public void set_location(Location location) {
+    public void set_location(LatLng location) {
         this.winnerLocation = location;
     }
 

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 public class Fragment_Map extends Fragment implements OnMapReadyCallback {
 
+    private final float MAP_ZOOM = 15f;
     private GoogleMap mGoogleMap;
     private MapView mMapView;
     private View mView;
@@ -58,25 +59,33 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        setDataOnMap(googleMap);
+        // add markers by winners locations
+        setDataOnMap();
     }
 
-    private void setDataOnMap(GoogleMap googleMap) {
+    private void setDataOnMap() {
         // clear map from previous markers
-        googleMap.clear();
+        mGoogleMap.clear();
         // load data of victories to list
         ArrayList<VictoryData> list = My_SP.getInstance().loadData();
         // add marker for every winner
         for(VictoryData winner: list) {
             if(winner.get_location() != null) {
-                LatLng location = new LatLng(winner.get_location().getLatitude(), winner.get_location().getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()));
+                LatLng location = winner.get_location();
+                mGoogleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()));
             }
         }
-        // move camera to the highest score location
+        moveCamera(list);
+    }
+
+    // move camera to the highest score location
+    private void moveCamera(ArrayList<VictoryData> list) {
         if(list.size() >= 1 && list.get(0).get_location() != null) {
-            LatLng location = new LatLng(list.get(0).get_location().getLatitude(), list.get(0).get_location().getLongitude());
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng location = list.get(0).get_location();
+            markerOptions.position(location);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLng(location));
+            mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(markerOptions.getPosition(), MAP_ZOOM));
         }
     }
 }

@@ -2,7 +2,6 @@ package com.example.wargame_v2.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Location;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +18,7 @@ import com.example.wargame_v2.R;
 import com.example.wargame_v2.Utils.My_SP;
 import com.example.wargame_v2.Utils.Utils;
 import com.example.wargame_v2.Utils.VictoryData;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +54,7 @@ public class Activity_Game extends AppCompatActivity {
     private Utils utils = Utils.getInstance();
     private Random rand = new Random();
     private MediaPlayer mp;
-    private Location mCurrentLocation;
+    private LatLng mCurrentLocation;
     private int player1_counterAttack = 0;
     private int player2_counterAttack = 0;
     private int turn = 0;
@@ -265,9 +265,9 @@ public class Activity_Game extends AppCompatActivity {
     private void saveVictoryData() {
         // save data of winner in sharedPreferences
         if (turn == PLAYER1_TURN)  // player 2 won
-            saveData(PLAYER2_NAME, player2_counterAttack, mCurrentLocation);
+            saveData(PLAYER2_NAME, player2_counterAttack);
         else                       // player 1 won
-            saveData(PLAYER1_NAME, player1_counterAttack, mCurrentLocation);
+            saveData(PLAYER1_NAME, player1_counterAttack);
     }
 
     /* open victory screen after game over */
@@ -280,12 +280,11 @@ public class Activity_Game extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /* save data of winner with sharedPreferences */
-    private void saveData(String name, int counterOfAttacks, Location location) {
-        ArrayList<VictoryData> list;
+    /* save data of winner to sharedPreferences */
+    private void saveData(String name, int counterOfAttacks) {
         // load data from sharedPreferences
         My_SP sp = My_SP.getInstance();
-        list = sp.loadData();
+        ArrayList<VictoryData> list = sp.loadData();
         if (list.size() == 10) {
             // sort array by victories
             Collections.sort(list, new Comparator<VictoryData>() {
@@ -297,11 +296,11 @@ public class Activity_Game extends AppCompatActivity {
             // replace object at the last place
             if (list.get(list.size() - 1).get_attacks() > counterOfAttacks) {
                 list.remove(list.get(list.size() - 1));
-                list.add(new VictoryData(name, counterOfAttacks, location));
+                list.add(new VictoryData(name, counterOfAttacks, mCurrentLocation));
             }
         } else
             // add new object - list size is less than 10
-            list.add(new VictoryData(name, counterOfAttacks, location));
+            list.add(new VictoryData(name, counterOfAttacks, mCurrentLocation));
         // save back to sharedPreferences
         sp.saveData(list);
     }

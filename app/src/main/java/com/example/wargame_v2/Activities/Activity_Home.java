@@ -23,12 +23,10 @@ public class Activity_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Utils glide_util = Utils.getInstance();
-
         // set value of buttons
         setValues();
         // set background image
-        glide_util.setImage(background_img, ContextCompat.getDrawable(this, R.drawable.home_background));
+        Utils.getInstance().setImage(background_img, ContextCompat.getDrawable(this, R.drawable.home_background));
 
         startGame.setOnClickListener(new View.OnClickListener() {
             @Override

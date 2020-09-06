@@ -26,6 +26,7 @@ public class My_SP {
         return instance;
     }
 
+    // save array list to SharedPreferences using Gson
     public void saveData(ArrayList<VictoryData> rank_list) {
         SharedPreferences.Editor editor = prefs.edit();
         Gson gson = new Gson();
@@ -34,6 +35,7 @@ public class My_SP {
         editor.apply();
     }
 
+    // load array list from SharedPreferences using Gson
     public ArrayList<VictoryData> loadData() {
         Gson gson = new Gson();
         String json = prefs.getString(KEY, null);

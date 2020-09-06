@@ -2,8 +2,6 @@ package com.example.wargame_v2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -29,10 +27,8 @@ public class Activity_Victory extends AppCompatActivity {
 
         // initialize variables
         setValues();
-        // init Glide
-        Utils glide_util = Utils.getInstance();
         // set background image
-        glide_util.setImage(background, ContextCompat.getDrawable(this, R.drawable.winner_podium));
+        Utils.getInstance().setImage(background, ContextCompat.getDrawable(this, R.drawable.winner_podium));
         // get victory name and set TextView
         Intent input = getIntent();
         String victory = input.getStringExtra(EXTRA_KEY_VICTORY);

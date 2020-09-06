@@ -28,4 +28,9 @@ public class Activity_Rank extends AppCompatActivity {
         transaction.replace(layout, fragment);
         transaction.commit();
     }
+
+    @Override
+    public void onBackPressed(){
+        finish();
+    }
 }

@@ -5,30 +5,24 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.location.LocationManager;
+import android.util.Log;
 import android.widget.ImageView;
-// glide
 import androidx.core.app.ActivityCompat;
-
+// glide
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
+// location
+import android.location.Location;
+import android.location.LocationManager;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.Objects;
 
 public class Utils {
 
     private static Utils instance;
-    private FusedLocationProviderClient fusedLocationProviderClient;
     private final int REQUEST_CODE = 101;
-    private Location last_location;
     private Context context;
-    private LocationManager locationManager;
 
     private Utils(Context context) {
         this.context = context;
@@ -52,31 +46,10 @@ public class Utils {
                 .into(imageView);
     }
 
-    /*
-    public Location getCurrentLocation() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context);
-        fetchLastLocation();
-        return last_location;
-    }
-
-    private void fetchLastLocation() {
-        if(ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[]
-                    { Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE);
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                last_location =  location;
-            }
-        });
-    }
-     */
-
-    public Location getLocation(Activity activity) {
-        locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+    // get current location
+    public LatLng getLocation(Activity activity) {
+        LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
+        // check permissions
         if(ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(activity, Manifest.permission.ACCESS_COARSE_LOCATION) !=
@@ -84,15 +57,23 @@ public class Utils {
             ActivityCompat.requestPermissions(Objects.requireNonNull(activity),new String[] {
                     Manifest.permission.ACCESS_FINE_LOCATION }, REQUEST_CODE);
         } else {
+            // get last known position using network
             Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            if(location != null)
-                return location;
+            if(location != null) {
+                Log.d("pttt", "Location Found By Network");
+                return new LatLng(location.getLatitude(), location.getLongitude());
+            }
             else {
+                // get last known position using GPS
                 location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                if(location != null)
-                    return location;
+                if(location != null) {
+                    Log.d("pttt", "Location Found By GPS");
+                    return new LatLng(location.getLatitude(), location.getLongitude());
+                }
             }
         }
+        // can't find location
+        Log.d("pttt","Null Location");
         return null;
     }
 }

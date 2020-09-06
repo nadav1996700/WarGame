@@ -57,6 +57,7 @@ public class Activity_Victory extends AppCompatActivity {
         victory_TV.setText(victory + " WON!" + "\n" + "  with " + attacks + " strikes");
     }
 
+    // initialize variables
     private void setValues() {
         newGame = findViewById(R.id.victory_BTN_newGame);
         home_screen = findViewById(R.id.victory_BTN_home);

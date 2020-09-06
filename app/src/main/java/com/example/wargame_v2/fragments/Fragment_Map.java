@@ -24,9 +24,9 @@ import java.util.ArrayList;
 
 public class Fragment_Map extends Fragment implements OnMapReadyCallback {
 
-    GoogleMap mGoogleMap;
-    MapView mMapView;
-    View mView;
+    private GoogleMap mGoogleMap;
+    private MapView mMapView;
+    private View mView;
 
     public static Fragment_Map newInstance() {
         Fragment_Map fragment = new Fragment_Map();
@@ -56,26 +56,24 @@ public class Fragment_Map extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        MapsInitializer.initialize(getContext());
         mGoogleMap = googleMap;
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         setDataOnMap(googleMap);
     }
 
     private void setDataOnMap(GoogleMap googleMap) {
-        // initialize camera location
-        LatLng tel_aviv = new LatLng(32.109333, 34.855499);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(tel_aviv));
+        // clear map from previous markers
+        googleMap.clear();
         // load data of victories to list
         ArrayList<VictoryData> list = My_SP.getInstance().loadData();
         // add marker for every winner
         for(VictoryData winner: list) {
             if(winner.get_location() != null) {
                 LatLng location = new LatLng(winner.get_location().getLatitude(), winner.get_location().getLongitude());
-                googleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()
-                + "," + winner.get_attacks()));
+                googleMap.addMarker(new MarkerOptions().position(location).title(winner.get_name()));
             }
         }
+        // move camera to the highest score location
         if(list.size() >= 1 && list.get(0).get_location() != null) {
             LatLng location = new LatLng(list.get(0).get_location().getLatitude(), list.get(0).get_location().getLongitude());
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(location));

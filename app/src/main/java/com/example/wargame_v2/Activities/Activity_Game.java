@@ -251,7 +251,7 @@ public class Activity_Game extends AppCompatActivity {
             // release resources of MediaPlayer
             mp.release();
             // get location
-            mCurrentLocation = utils.getCurrentLocation();
+            mCurrentLocation = utils.getLocation(this);
             // save victory data
             saveVictoryData();
             // open victory activity and finish

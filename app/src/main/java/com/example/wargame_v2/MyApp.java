@@ -10,7 +10,6 @@ public class MyApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-        // init singletone utils
         My_SP sp = My_SP.initHelper(this);
         Utils utils = Utils.initHelper(this);
     }

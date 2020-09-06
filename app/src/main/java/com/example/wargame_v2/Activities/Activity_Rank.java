@@ -1,6 +1,7 @@
 package com.example.wargame_v2.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
@@ -16,19 +17,15 @@ public class Activity_Rank extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rank);
 
-        initFragments();
+        Fragment_Map fragment_map = Fragment_Map.newInstance();
+        Fragment_top10 fragment_top10 = Fragment_top10.newInstance();
+        initFragments(fragment_map, R.id.rank_LAY_map);
+        initFragments(fragment_top10, R.id.rank_LAY_list);
     }
 
-    private void initFragments() {
-
-        Fragment_Map fragment_map = Fragment_Map.newInstance();
+    private void initFragments(Fragment fragment, int layout) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.rank_LAY_map, fragment_map);
+        transaction.replace(layout, fragment);
         transaction.commit();
-
-        Fragment_top10 fragment_top10 = Fragment_top10.newInstance();
-        FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
-        transaction2.replace(R.id.rank_LAY_list, fragment_top10);
-        transaction2.commit();
     }
 }

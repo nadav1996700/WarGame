@@ -23,7 +23,6 @@ public class Activity_Home extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        // init Glide
         Utils glide_util = Utils.getInstance();
 
         // set value of buttons

@@ -40,6 +40,7 @@ public class VictoryData {
     }
 
     @Override
+    @NonNull
     public String toString() {
         return name + ": " + attacks;
     }

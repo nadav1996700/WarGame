@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.wargame_v2.Activities.Activity_Home">
+    tools:context="src.Activities.Activity_Home">
 
     <ImageView
         android:id="@+id/home_IV_background"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:text="WAR GAME"
+        android:text="@string/WAR_GAME"
         android:textColor="#FFEB3B"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"/>
@@ -31,7 +31,7 @@
         android:padding="10dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="START GAME"
+        android:text="@string/START_GAME"
         android:textColor="#DEE3E2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
@@ -45,7 +45,7 @@
         android:padding="10dp"
         android:textSize="15sp"
         android:textStyle="bold"
-        android:text="RANK"
+        android:text="@string/Rank"
         android:textColor="#DEE3E2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"

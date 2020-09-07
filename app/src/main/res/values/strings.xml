@@ -10,5 +10,6 @@
     <string name="WAR_GAME">WAR GAME</string>
     <string name="START_GAME">START GAME</string>
     <string name="Rank">RANK</string>
+    <string name="pick">PICK</string>
 
 </resources>

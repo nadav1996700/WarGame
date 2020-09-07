@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.wargame_v2.Activities.Activity_Victory">
+    tools:context="src.Activities.Activity_Victory">
 
     <ImageView
         android:id="@+id/victory_IV_background"

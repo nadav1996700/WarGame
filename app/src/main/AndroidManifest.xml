@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
-        android:name=".MyApp"
+        android:name="src.MyApp"
         android:allowBackup="false"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher_round"
@@ -20,7 +20,7 @@
             android:value="AIzaSyDX9TexC08f6uIpA8nYJSFNyCOWiSLPAfg" />
 
         <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Home"
+            android:name="src.Activities.Activity_Home"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape">
             <intent-filter>
@@ -30,15 +30,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Game"
+            android:name="src.Activities.Activity_Game"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Victory"
+            android:name="src.Activities.Activity_Victory"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="sensorLandscape" />
         <activity
-            android:name="com.example.wargame_v2.Activities.Activity_Rank"
+            android:name="src.Activities.Activity_Rank"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait" />
     </application>

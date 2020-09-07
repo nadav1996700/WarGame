@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,9 +33,9 @@ public class Activity_Game extends AppCompatActivity {
     private static final int LARGE_ATTACK_POINTS = 50;
     private static final int MEDIUM_ATTACK_POINTS = 30;
     private static final int SMALL_ATTACK_POINTS = 10;
-    private final String PLAYER1_NAME = "Superman";
-    private final String PLAYER2_NAME = "Ironman";
-    private final int DELAY = 2000;
+    private static final String PLAYER1_NAME = "Superman";
+    private static final String PLAYER2_NAME = "Ironman";
+    private static final int DELAY = 2000;
 
     private ProgressBar player1_PB;
     private ProgressBar player2_PB;
@@ -42,6 +43,7 @@ public class Activity_Game extends AppCompatActivity {
     private ImageView player2_imageView;
     private ImageView player1_cube;
     private ImageView player2_cube;
+    private TextView attackType;
     private Button largeAttack_player1;
     private Button mediumAttack_player1;
     private Button smallAttack_player1;
@@ -214,24 +216,29 @@ public class Activity_Game extends AppCompatActivity {
 
     /* update life bar */
     private void update_PB(int number_of_attack) {
-        if (turn == PLAYER1_TURN)
+        if (turn == PLAYER1_TURN) {
             setProgressBar(number_of_attack, player1_Buttons, player2_PB);
-        else
+            (player1_Buttons.get(number_of_attack - 1)).setEnabled(false);
+        }
+        else {
             setProgressBar(number_of_attack, player2_Buttons, player1_PB);
+            (player2_Buttons.get(number_of_attack - 1)).setEnabled(false);
+        }
     }
 
     private void setProgressBar(int number_of_attack, ArrayList<Button> list, ProgressBar opponent_pb) {
-        /* disable chosen attack button */
-        (list.get(number_of_attack - 1)).setEnabled(false);
 
         switch (number_of_attack) {
             case 1:
+                attackType.setText(SMALL_ATTACK_POINTS + " pt attack");
                 decreasePB(opponent_pb, SMALL_ATTACK_POINTS);
                 break;
             case 2:
+                attackType.setText(MEDIUM_ATTACK_POINTS + " pt attack");
                 decreasePB(opponent_pb, MEDIUM_ATTACK_POINTS);
                 break;
             case 3:
+                attackType.setText(LARGE_ATTACK_POINTS + " pt attack");
                 decreasePB(opponent_pb, LARGE_ATTACK_POINTS);
                 break;
         }
@@ -338,6 +345,7 @@ public class Activity_Game extends AppCompatActivity {
         player2_imageView = findViewById(R.id.Game_IV_player2);
         player1_cube = findViewById(R.id.Game_IV_player1_Cube);
         player2_cube = findViewById(R.id.Game_IV_player2_Cube);
+        attackType = findViewById(R.id.Game_LBL_attackType);
         pick = findViewById(R.id.Game_BTN_pick);
         setImages();
 

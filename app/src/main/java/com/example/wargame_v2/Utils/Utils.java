@@ -21,7 +21,7 @@ import java.util.Objects;
 public class Utils {
 
     private static Utils instance;
-    private final int REQUEST_CODE = 101;
+    private static final int REQUEST_CODE = 101;
     private Context context;
 
     private Utils(Context context) {

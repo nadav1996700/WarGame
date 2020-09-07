@@ -15,7 +15,6 @@ import com.example.wargame_v2.Utils.VictoryData;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 
 public class Fragment_Map extends Fragment implements OnMapReadyCallback {
 
-    private final float MAP_ZOOM = 15f;
+    private static final float MAP_ZOOM = 15f;
     private GoogleMap mGoogleMap;
     private MapView mMapView;
     private View mView;

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class My_SP {
 
-    public  static final String KEY = "DATA";
+    public static final String KEY = "DATA";
     private static My_SP instance;
     private SharedPreferences prefs;
 

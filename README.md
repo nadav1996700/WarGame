@@ -10,7 +10,7 @@ When a player wins - the user is transferred to a screen that announces the winn
 return to the home screen.
 <br>
 <img src="https://user-images.githubusercontent.com/68897349/158044165-77300c2a-c757-4ff4-afc3-d9c8c2a64317.png" width="450" height="550" /> <br>
-<img src="https://user-images.githubusercontent.com/68897349/158044166-81d4cea0-bc50-4818-bd90-31103fdad0b3.png" width="500" height="600" /> <br>
-<img src="https://user-images.githubusercontent.com/68897349/158044167-c62f426c-5fbc-4d95-903c-4f8b09d3020c.png" width="500" height="600" /> <br>
-<img src="https://user-images.githubusercontent.com/68897349/158044168-5c94f0a0-011e-40b1-8888-d09cd5f68952.png" width="500" height="600" /> <br>
-<img src="https://user-images.githubusercontent.com/68897349/158044169-192ce607-4beb-400a-96f1-e5440fb20538.png" width="500" height="600" />
+<img src="https://user-images.githubusercontent.com/68897349/158044166-81d4cea0-bc50-4818-bd90-31103fdad0b3.png" width="450" height="550" /> <br>
+<img src="https://user-images.githubusercontent.com/68897349/158044167-c62f426c-5fbc-4d95-903c-4f8b09d3020c.png" width="450" height="550" /> <br>
+<img src="https://user-images.githubusercontent.com/68897349/158044168-5c94f0a0-011e-40b1-8888-d09cd5f68952.png" width="450" height="550" /> <br>
+<img src="https://user-images.githubusercontent.com/68897349/158044169-192ce607-4beb-400a-96f1-e5440fb20538.png" width="450" height="550" />
